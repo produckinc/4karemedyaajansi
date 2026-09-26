@@ -2084,3 +2084,131 @@ body.works-page-body .inner-page.works-page {
         letter-spacing: .08em !important;
     }
 }
+
+/* =========================================================
+   MOBIL HEADER V2 — viewport tasmasini kesin engeller.
+   Intro secicilerine dokunmaz.
+   ========================================================= */
+@media (max-width: 768px) {
+    html, body {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden !important;
+    }
+
+    body:not(:has(#intro)) .inner-header,
+    body.works-page-body .inner-header,
+    .inner-header {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        padding-left: 14px !important;
+        padding-right: 14px !important;
+        display: flex !important;
+        align-items: flex-start !important;
+        justify-content: space-between !important;
+        gap: 8px !important;
+        overflow: visible !important;
+    }
+
+    .inner-header .inner-brand {
+        flex: 1 1 auto !important;
+        min-width: 0 !important;
+        max-width: calc(100% - 122px) !important;
+        gap: 7px !important;
+    }
+
+    .inner-header .inner-brand > img:first-child {
+        width: 54px !important;
+        max-width: 54px !important;
+        flex: 0 0 54px !important;
+    }
+
+    .inner-header .inner-brand > .inner-brand-name {
+        width: min(29vw, 108px) !important;
+        max-width: 108px !important;
+        min-width: 0 !important;
+        flex: 0 1 108px !important;
+    }
+
+    .inner-header .inner-header-actions {
+        flex: 0 0 114px !important;
+        width: 114px !important;
+        min-width: 114px !important;
+        max-width: 114px !important;
+        margin: 9px 0 0 auto !important;
+        gap: 9px !important;
+        justify-content: flex-end !important;
+        white-space: nowrap !important;
+    }
+
+    .inner-header .inner-menu-link,
+    .inner-header .inner-menu-button {
+        flex: 0 0 auto !important;
+        font-size: 6.6px !important;
+        line-height: 1.15 !important;
+        letter-spacing: .08em !important;
+        white-space: nowrap !important;
+    }
+
+    .inner-header .inner-menu-link {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 3px !important;
+    }
+
+    /* Ok artik metin/emoji degil, tamamen CSS cizimi. */
+    .inner-header .inner-menu-link .css-external-arrow {
+        display: none !important;
+    }
+    .inner-header .inner-menu-link::after {
+        content: "" !important;
+        display: inline-block !important;
+        width: 5px !important;
+        height: 5px !important;
+        margin-left: 1px !important;
+        border-top: 1px solid currentColor !important;
+        border-right: 1px solid currentColor !important;
+        transform: rotate(-45deg) !important;
+        background: transparent !important;
+    }
+
+    .inner-header .inner-menu-button {
+        gap: 5px !important;
+    }
+    .inner-header .inner-menu-button span {
+        width: 13px !important;
+    }
+
+    .inner-page,
+    .works-page-body .inner-page.works-page {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        overflow-x: hidden !important;
+    }
+}
+
+@media (max-width: 380px) {
+    .inner-header .inner-brand > img:first-child {
+        width: 50px !important;
+        max-width: 50px !important;
+        flex-basis: 50px !important;
+    }
+    .inner-header .inner-brand > .inner-brand-name {
+        width: min(27vw, 96px) !important;
+        max-width: 96px !important;
+    }
+    .inner-header .inner-header-actions {
+        flex-basis: 108px !important;
+        width: 108px !important;
+        min-width: 108px !important;
+        max-width: 108px !important;
+        gap: 7px !important;
+    }
+    .inner-header .inner-menu-link,
+    .inner-header .inner-menu-button {
+        font-size: 6.2px !important;
+        letter-spacing: .055em !important;
+    }
+}
