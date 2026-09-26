@@ -27,6 +27,10 @@ function showHomeDirectly() {
             stroke.maskGuide.style.strokeDashoffset = "0";
             stroke.maskGuide.setAttribute("stroke-dashoffset", "0");
         }
+        if (stroke.revealGroup) {
+            stroke.revealGroup.style.visibility = "visible";
+            stroke.revealGroup.style.opacity = "1";
+        }
     });
 
     // Intro sonunda kullanılan CSS durumlarını uygula.
@@ -325,6 +329,10 @@ function prepareLogo(svg) {
         revealGroup.setAttribute("mask", `url(#${revealMaskId})`);
         revealGroup.appendChild(creamRect);
 
+        // Gelecek adımların maskeden sızan tek bir pikseli bile başlangıçta görünmesin.
+        // İlgili adım başladığında animateStroke() bu grubu görünür yapacak.
+        revealGroup.style.visibility = "hidden";
+        revealGroup.style.opacity = "0";
         sourceGroup.parentNode.insertBefore(revealGroup, sourceGroup);
 
         sourceGroup.style.display = "none";
@@ -333,6 +341,7 @@ function prepareLogo(svg) {
         originalGuideGroup.style.pointerEvents = "none";
 
         stroke.maskGuide = animatedGuide;
+        stroke.revealGroup = revealGroup;
         stroke.length = length;
         stroke.brushWidth = brushWidth;
 
@@ -351,6 +360,19 @@ function animateStroke(stroke) {
             return;
         }
 
+        // Sadece sırası gelen parçayı aç. Böylece 7. adımın kare ucu gibi
+        // sonraki parçalardan hiçbir şey ilk karede görünemez.
+        if (stroke.revealGroup) {
+            stroke.revealGroup.style.visibility = "visible";
+            stroke.revealGroup.style.opacity = "1";
+        }
+
+        // Her adımı kesin olarak sıfırdan başlat. Mobil tarayıcıların önceki
+        // maske raster'ını bir kare göstermesini de engeller.
+        guide.style.strokeDasharray = `${stroke.length} ${stroke.length}`;
+        guide.style.strokeDashoffset = `${stroke.length}`;
+        guide.setAttribute("stroke-dashoffset", String(stroke.length));
+
         const start = performance.now();
         const duration = stroke.duration;
         const length = stroke.length;
@@ -364,6 +386,7 @@ function animateStroke(stroke) {
             const offset = length * (1 - progress);
 
             guide.style.strokeDashoffset = `${offset}`;
+            guide.setAttribute("stroke-dashoffset", String(offset));
             // Mobil Chromium mask içindeki CSS değişimini her karede yeniden boyamayabiliyor.
             // Attribute'u da güncellemek maskenin kararlı biçimde çizilmesini sağlıyor.
             guide.setAttribute("stroke-dashoffset", String(offset));
