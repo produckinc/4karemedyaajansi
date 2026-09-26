@@ -337,7 +337,7 @@ function prepareLogo(svg) {
         // 7. adımın kılavuzu kısa ve yatay/çapraz olduğu için round linecap,
         // dashoffset tamamen kapalıyken bile uçta yarım fırça kapağı gösterebiliyor.
         // Yalnızca 7. adımda butt cap kullanarak bu başlangıç sızıntısını kaldırıyoruz.
-        animatedGuide.setAttribute("stroke-linecap", stroke.step === 7 ? "butt" : "round");
+        animatedGuide.setAttribute("stroke-linecap", (stroke.step === 4 || stroke.step === 7) ? "butt" : "round");
         animatedGuide.setAttribute("stroke-linejoin", "round");
 
         animatedGuide.style.strokeDasharray = `${length} ${length}`;
