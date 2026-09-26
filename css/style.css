@@ -1963,3 +1963,124 @@ body.works-page-body .inner-page.works-page {
         font-size: clamp(20px, 6.35vw, 24px);
     }
 }
+
+/* =========================================================
+   MOBIL IC SAYFA HEADER + EMOJI OK DUZELTMESI
+   Intro animasyonuna ait secicilere dokunmaz.
+   ========================================================= */
+.css-external-arrow {
+    position: relative;
+    display: inline-block;
+    width: .9em;
+    height: .9em;
+    flex: 0 0 .9em;
+    font-size: 1em;
+    line-height: 1;
+    vertical-align: -.04em;
+}
+.css-external-arrow::before {
+    content: "";
+    position: absolute;
+    left: .08em;
+    bottom: .16em;
+    width: .78em;
+    height: 1px;
+    background: currentColor;
+    transform: rotate(-45deg);
+    transform-origin: left center;
+}
+.css-external-arrow::after {
+    content: "";
+    position: absolute;
+    right: .02em;
+    top: .02em;
+    width: .43em;
+    height: .43em;
+    border-top: 1px solid currentColor;
+    border-right: 1px solid currentColor;
+}
+.css-external-arrow-large {
+    width: .78em;
+    height: .78em;
+    vertical-align: .04em;
+}
+
+@media (max-width: 768px) {
+    /* Marka grubuna sagdaki ANA SAYFA + MENU icin garanti alan birak. */
+    .inner-header {
+        box-sizing: border-box;
+        padding-left: 18px !important;
+        padding-right: 18px !important;
+        gap: 10px;
+    }
+
+    .inner-header .inner-brand {
+        min-width: 0;
+        flex: 1 1 auto;
+        gap: 9px !important;
+    }
+
+    .inner-header .inner-brand > img:first-child {
+        width: 68px !important;
+        flex: 0 0 68px;
+    }
+
+    .inner-header .inner-brand > .inner-brand-name {
+        width: min(32vw, 132px) !important;
+        max-width: 132px !important;
+        flex: 0 1 132px;
+    }
+
+    .inner-header .inner-header-actions {
+        flex: 0 0 auto;
+        gap: 10px !important;
+        margin: 10px 0 0 0 !important;
+        white-space: nowrap;
+    }
+
+    .inner-header .inner-menu-link,
+    .inner-header .inner-menu-button {
+        font-size: 7px !important;
+        letter-spacing: .12em !important;
+        white-space: nowrap;
+    }
+
+    .inner-header .inner-menu-link {
+        display: inline-flex !important;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .inner-header .inner-menu-button {
+        gap: 7px !important;
+    }
+
+    .inner-header .inner-menu-button span {
+        width: 16px !important;
+    }
+
+    /* Calismalarimiz sayfasindaki ozel header da ayni mobil olculeri kullansin. */
+    .works-page-body .inner-header {
+        padding-left: 18px !important;
+        padding-right: 18px !important;
+    }
+}
+
+@media (max-width: 380px) {
+    .inner-header .inner-brand > img:first-child {
+        width: 60px !important;
+        flex-basis: 60px;
+    }
+    .inner-header .inner-brand > .inner-brand-name {
+        width: min(29vw, 112px) !important;
+        max-width: 112px !important;
+    }
+    .inner-header .inner-header-actions {
+        gap: 7px !important;
+    }
+    .inner-header .inner-menu-link,
+    .inner-header .inner-menu-button {
+        font-size: 6.5px !important;
+        letter-spacing: .08em !important;
+    }
+}
