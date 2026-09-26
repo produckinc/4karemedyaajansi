@@ -392,15 +392,22 @@ function animateStroke(stroke) {
         // bu sınırda anti-alias nedeniyle tek karelik ince bir piksel şeridi gösterebiliyor.
         // Maskeyi birkaç SVG birimi daha geriden başlatmak bu sınırı tamamen maskenin
         // dışında tutuyor. Diğer adımların geometrisine dokunmuyoruz.
-        const startSafety = stroke.step === 4
-            ? Math.max(3, stroke.brushWidth * 0.10)
-            : 0;
-        const closedOffset = length + startSafety;
+        // 4. adımın SVG görseli en üst satırdan başlayan çok ince bir dikey alfa izi içeriyor.
+        // Dash desenine güvenlik payı eklemek deseni sardırıp bu üst ucu tekrar görünür
+        // yapabildiği için 4. adımda offset'i uzatmıyoruz. Bunun yerine fırçayı gerçek
+        // animasyon karesi başlayana kadar tamamen saydam tutuyoruz.
+        const startSafety = 0;
+        const closedOffset = length;
 
-        guide.style.strokeDasharray = `${length} ${length + startSafety}`;
+        guide.style.strokeDasharray = `${length} ${length}`;
         guide.style.strokeDashoffset = `${closedOffset}`;
-        guide.setAttribute("stroke-dasharray", `${length} ${length + startSafety}`);
+        guide.setAttribute("stroke-dasharray", `${length} ${length}`);
         guide.setAttribute("stroke-dashoffset", String(closedOffset));
+
+        if (stroke.step === 4) {
+            guide.style.strokeOpacity = "0";
+            guide.setAttribute("stroke-opacity", "0");
+        }
 
         const begin = () => {
             // Maske başlangıç değeri tarayıcıya işlendiği kareden SONRA parçayı aç.
@@ -419,10 +426,18 @@ function animateStroke(stroke) {
 
             // Linear hareket:
             // adım başında/sonunda hızlanma-yavaşlama yok.
-            const offset = (length + startSafety) * (1 - progress);
+            const offset = length * (1 - progress);
 
             guide.style.strokeDashoffset = `${offset}`;
             guide.setAttribute("stroke-dashoffset", String(offset));
+
+            // 4. adımın maskesi yalnızca ilk GERÇEK animasyon karesinde açılır.
+            // Böylece Chromium kapalı dash durumunun karşı uçtaki birkaç pikselini
+            // bir kareliğine çizse bile kullanıcıya ulaşamaz.
+            if (stroke.step === 4 && guide.getAttribute("stroke-opacity") !== "1") {
+                guide.style.strokeOpacity = "1";
+                guide.setAttribute("stroke-opacity", "1");
+            }
             // Mobil Chromium mask içindeki CSS değişimini her karede yeniden boyamayabiliyor.
             // Attribute'u da güncellemek maskenin kararlı biçimde çizilmesini sağlıyor.
             guide.setAttribute("stroke-dashoffset", String(offset));
