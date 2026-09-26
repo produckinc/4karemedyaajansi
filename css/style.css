@@ -2212,3 +2212,23 @@ body.works-page-body .inner-page.works-page {
         letter-spacing: .055em !important;
     }
 }
+
+/* MOBILE FIX: Çalışmalarımız başlığını tek satırda viewport içine sığdır. */
+@media (max-width: 768px) {
+    .works-page-body .inner-page.works-page h1 {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        font-size: clamp(30px, 9.2vw, 42px) !important;
+        line-height: .88 !important;
+        letter-spacing: -.075em !important;
+        white-space: nowrap !important;
+        overflow: visible !important;
+    }
+}
+
+@media (max-width: 380px) {
+    .works-page-body .inner-page.works-page h1 {
+        font-size: 8.9vw !important;
+    }
+}
