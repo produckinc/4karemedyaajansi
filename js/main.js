@@ -385,13 +385,22 @@ function animateStroke(stroke) {
         // Önce maske KAPALIYKEN başlangıç konumunu kesin olarak kur.
         // Özellikle Android Chrome, görünür grupta dashoffset sıfırlanırsa
         // önceki SVG maske raster'ını tek kare gösterebiliyor (7. adım sızması).
-        guide.style.strokeDasharray = `${stroke.length} ${stroke.length}`;
-        guide.style.strokeDashoffset = `${stroke.length}`;
-        guide.setAttribute("stroke-dasharray", `${stroke.length} ${stroke.length}`);
-        guide.setAttribute("stroke-dashoffset", String(stroke.length));
-
         const duration = stroke.duration;
         const length = stroke.length;
+
+        // 4. adımın üst uç noktası tam dash sınırına denk geliyor. Android Chromium
+        // bu sınırda anti-alias nedeniyle tek karelik ince bir piksel şeridi gösterebiliyor.
+        // Maskeyi birkaç SVG birimi daha geriden başlatmak bu sınırı tamamen maskenin
+        // dışında tutuyor. Diğer adımların geometrisine dokunmuyoruz.
+        const startSafety = stroke.step === 4
+            ? Math.max(3, stroke.brushWidth * 0.10)
+            : 0;
+        const closedOffset = length + startSafety;
+
+        guide.style.strokeDasharray = `${length} ${length + startSafety}`;
+        guide.style.strokeDashoffset = `${closedOffset}`;
+        guide.setAttribute("stroke-dasharray", `${length} ${length + startSafety}`);
+        guide.setAttribute("stroke-dashoffset", String(closedOffset));
 
         const begin = () => {
             // Maske başlangıç değeri tarayıcıya işlendiği kareden SONRA parçayı aç.
@@ -410,7 +419,7 @@ function animateStroke(stroke) {
 
             // Linear hareket:
             // adım başında/sonunda hızlanma-yavaşlama yok.
-            const offset = length * (1 - progress);
+            const offset = (length + startSafety) * (1 - progress);
 
             guide.style.strokeDashoffset = `${offset}`;
             guide.setAttribute("stroke-dashoffset", String(offset));
@@ -428,9 +437,9 @@ function animateStroke(stroke) {
             }
         };
 
-        // Yalnızca 7. adımda bir hazırlık karesi bırakıyoruz. İlk 6 adımın
-        // mevcut zamanlaması ve hissi birebir korunuyor.
-        if (stroke.step === 7) {
+        // 4 ve 7. adımda maskenin kapalı başlangıç değerini Chromium'a bir kare
+        // önceden işletiyoruz. Bu kare animasyon süresine eklenmez.
+        if (stroke.step === 4 || stroke.step === 7) {
             requestAnimationFrame(begin);
         } else {
             begin();
