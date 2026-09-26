@@ -2232,3 +2232,23 @@ body.works-page-body .inner-page.works-page {
         font-size: 8.9vw !important;
     }
 }
+
+
+/* MOBILE WORKS TITLE V2 — explicit class + cache-busted stylesheet */
+@media (max-width: 768px) {
+  body.works-page-body main.inner-page.works-page h1.works-mobile-title {
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin-right: 0 !important;
+    font-size: 9vw !important;
+    line-height: .88 !important;
+    letter-spacing: -.075em !important;
+    white-space: nowrap !important;
+  }
+}
+@media (max-width: 390px) {
+  body.works-page-body main.inner-page.works-page h1.works-mobile-title {
+    font-size: 8.6vw !important;
+  }
+}
