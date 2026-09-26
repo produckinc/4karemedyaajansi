@@ -1,7 +1,20 @@
 
+// Ana site adresi her zaman gerçek intro ile açılır.
+// Sadece iç sayfalardaki "ANA SAYFA" bağlantıları ?direct=1 gönderdiğinde
+// intro atlanır ve tamamlanmış ana sayfa doğrudan gösterilir.
 const HOME_DIRECT =
-    new URLSearchParams(window.location.search).get("direct") === "1" ||
-    sessionStorage.getItem("4kareIntroPlayed") === "1";
+    new URLSearchParams(window.location.search).get("direct") === "1";
+
+// Tarayıcının önceki kaydırma konumunu geri yükleyip "Seçili Çalışmalar"
+// bölümünü introdan önce göstermesini engelle.
+if ("scrollRestoration" in history) {
+    history.scrollRestoration = "manual";
+}
+
+if (!HOME_DIRECT) {
+    window.scrollTo(0, 0);
+}
+
 
 function showHomeDirectly() {
     const intro = document.getElementById("intro");
@@ -444,7 +457,14 @@ async function finishIntro() {
     document.body.classList.add("site-ready");
 }
 
-document.addEventListener("DOMContentLoaded", loadLogo);
+document.addEventListener("DOMContentLoaded", () => {
+    if (!HOME_DIRECT) {
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+    }
+    loadLogo();
+});
 
 // Tam ekran menü
 document.addEventListener("DOMContentLoaded", () => {
