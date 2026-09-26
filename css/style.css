@@ -2241,7 +2241,7 @@ body.works-page-body .inner-page.works-page {
     width: 100% !important;
     max-width: none !important;
     margin-right: 0 !important;
-    font-size: 9vw !important;
+    font-size: 10.7vw !important;
     line-height: .88 !important;
     letter-spacing: -.075em !important;
     white-space: nowrap !important;
@@ -2249,6 +2249,6 @@ body.works-page-body .inner-page.works-page {
 }
 @media (max-width: 390px) {
   body.works-page-body main.inner-page.works-page h1.works-mobile-title {
-    font-size: 8.6vw !important;
+    font-size: 10.4vw !important;
   }
 }
