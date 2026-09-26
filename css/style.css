@@ -1852,3 +1852,114 @@ body.works-page-body .inner-page.works-page {
     .scroll-cue { display: none; }
     #hero-content .hero-watermark { width: 58vw; right: -12vw; }
 }
+
+/* =========================================================
+   MOBIL ANA SAYFA YERLESIM DUZELTMESI
+   Intro animasyonuna dokunmaz; yalnizca intro tamamlandiktan
+   sonra (body.site-ready) telefon hero yerlesimini duzeltir.
+   ========================================================= */
+@media (max-width: 768px) {
+    /* Intro bittikten sonra hero'yu 100dvh'ye kilitleme.
+       Icerik kadar yukseklik kullanir; Secili Calismalar hemen devam eder. */
+    body.site-ready #intro {
+        height: auto;
+        min-height: 0;
+        overflow: visible;
+    }
+
+    body.site-ready #hero-content {
+        position: relative;
+        inset: auto;
+        min-height: 0;
+        padding: 122px 18px 30px;
+    }
+
+    /* El yazisinin tamami telefon genisligine sigsin. */
+    body.site-ready .handwritten {
+        width: calc(100vw - 36px);
+        max-width: none;
+        margin: 10px 0 0 0;
+        font-size: clamp(21px, 6.7vw, 29px);
+        line-height: 1.08;
+        white-space: nowrap;
+        transform: rotate(-3deg);
+        transform-origin: left center;
+    }
+
+    /* Aciklama + Calismalarimiz birbirinden ayrilsin. */
+    body.site-ready .hero-bottom {
+        margin-top: 24px;
+        padding-top: 14px;
+        gap: 18px;
+    }
+
+    body.site-ready .work-link {
+        position: relative;
+        z-index: 2;
+        gap: 11px;
+    }
+
+    /* Android'in ↗ karakterini renkli emoji olarak cizmesini engelle.
+       Ok tamamen CSS ile cizilir. */
+    body.site-ready .work-link .arrow {
+        position: relative;
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        flex: 0 0 12px;
+        overflow: visible;
+        font-size: 0;
+        line-height: 0;
+        color: transparent;
+    }
+
+    body.site-ready .work-link .arrow::before {
+        content: "";
+        position: absolute;
+        left: 1px;
+        bottom: 2px;
+        width: 11px;
+        height: 1px;
+        background: var(--black);
+        transform: rotate(-45deg);
+        transform-origin: left center;
+    }
+
+    body.site-ready .work-link .arrow::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 6px;
+        height: 6px;
+        border-top: 1px solid var(--black);
+        border-right: 1px solid var(--black);
+    }
+
+    /* Asagi kaydir artik Calismalarimiz ile ayni koordinata sabitlenmez. */
+    body.site-ready .scroll-cue {
+        position: relative;
+        left: auto;
+        right: auto;
+        bottom: auto;
+        width: max-content;
+        margin-top: 18px;
+        gap: 9px;
+        font-size: 7px;
+    }
+
+    body.site-ready .scroll-line {
+        width: 28px;
+    }
+
+    /* Hero sonrasi gereksiz boslugu kaldir. */
+    body.site-ready .selected-work {
+        padding-top: 28px !important;
+    }
+}
+
+@media (max-width: 380px) {
+    body.site-ready .handwritten {
+        font-size: clamp(20px, 6.35vw, 24px);
+    }
+}
