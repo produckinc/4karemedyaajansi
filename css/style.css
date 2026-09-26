@@ -81,6 +81,16 @@ a {
     width: 100%;
 }
 
+/* SVG DOM'a eklendiği an ham/tam logo parlamasın.
+   JS maskeleri hazırladıktan sonra görünür olur. */
+#animated-logo {
+    visibility: hidden;
+}
+
+#animated-logo.logo-prepared {
+    visibility: visible;
+}
+
 #animated-logo svg {
     display: block;
     height: auto;

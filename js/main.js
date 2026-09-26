@@ -126,6 +126,8 @@ async function loadLogo() {
         });
 
         prepareLogo(svg);
+        // SVG hazırlanırken ham logo bir kareliğine görünmesin (özellikle Android Chrome).
+        logoHost.classList.add("logo-prepared");
 
         await nextFrame();
         await nextFrame();
@@ -280,6 +282,10 @@ function prepareLogo(svg) {
         revealMask.setAttribute("id", revealMaskId);
         revealMask.setAttribute("maskUnits", "userSpaceOnUse");
         revealMask.setAttribute("maskContentUnits", "userSpaceOnUse");
+        // Android Chrome/SVG: reveal maskesinin alpha olarak yorumlanmasını engelle.
+        // Siyah arka plan = gizli, beyaz fırça = görünür olmalı.
+        revealMask.setAttribute("mask-type", "luminance");
+        revealMask.style.maskType = "luminance";
         revealMask.setAttribute("x", String(viewBox.x));
         revealMask.setAttribute("y", String(viewBox.y));
         revealMask.setAttribute("width", String(viewBox.width));
@@ -358,11 +364,15 @@ function animateStroke(stroke) {
             const offset = length * (1 - progress);
 
             guide.style.strokeDashoffset = `${offset}`;
+            // Mobil Chromium mask içindeki CSS değişimini her karede yeniden boyamayabiliyor.
+            // Attribute'u da güncellemek maskenin kararlı biçimde çizilmesini sağlıyor.
+            guide.setAttribute("stroke-dashoffset", String(offset));
 
             if (progress < 1) {
                 requestAnimationFrame(frame);
             } else {
                 guide.style.strokeDashoffset = "0";
+                guide.setAttribute("stroke-dashoffset", "0");
                 resolve();
             }
         }
@@ -373,7 +383,6 @@ function animateStroke(stroke) {
 
 async function playIntro() {
     sessionStorage.setItem("4kareIntroPlayed", "1");
-    document.body.classList.add("site-ready");
     // Adımlar arasında bilinçli hiçbir bekleme yok.
     await animateStroke(STROKES[0]);
     await animateStroke(STROKES[1]);
@@ -408,6 +417,8 @@ async function finishIntro() {
     // İsim logosu açılırken ana tasarım da yumuşakça görünür.
     await wait(520);
     intro.classList.add("hero-ready");
+    // Sayfanın devamını ancak intro tamamen bittikten sonra kaydırılabilir yap.
+    document.body.classList.add("site-ready");
 }
 
 document.addEventListener("DOMContentLoaded", loadLogo);
