@@ -61,6 +61,8 @@ function showHomeDirectly() {
     sessionStorage.setItem("4kareIntroPlayed", "1");
 
     document.body.classList.add("site-ready");
+    document.body.classList.remove("intro-pending");
+    window.scrollTo(0, 0);
 
     if (history.replaceState) {
         history.replaceState({}, "", "index.html");
@@ -160,6 +162,10 @@ async function loadLogo() {
 
     } catch (error) {
         console.error("Logo yükleme hatası:", error);
+        // SVG yüklenemezse kullanıcı siyah ekranda kalmasın.
+        document.body.classList.remove("intro-pending");
+        document.body.classList.add("site-ready");
+        window.scrollTo(0, 0);
     }
 }
 
@@ -455,6 +461,8 @@ async function finishIntro() {
     intro.classList.add("hero-ready");
     // Sayfanın devamını ancak intro tamamen bittikten sonra kaydırılabilir yap.
     document.body.classList.add("site-ready");
+    document.body.classList.remove("intro-pending");
+    window.scrollTo(0, 0);
 }
 
 document.addEventListener("DOMContentLoaded", () => {

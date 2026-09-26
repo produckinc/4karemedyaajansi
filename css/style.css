@@ -29,6 +29,26 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+
+/* --- Intro ilk-render koruması ---
+   Normal girişte intro bitene kadar aşağıdaki içerik tarayıcı tarafından
+   eski scroll konumuna dönülse bile görünemez. */
+body.intro-pending {
+    overflow: hidden !important;
+    background: var(--black) !important;
+}
+
+body.intro-pending #intro {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 9999 !important;
+    background: var(--black) !important;
+}
+
+body.intro-pending #calismalar {
+    visibility: hidden !important;
+}
+
 button,
 a {
     color: inherit;

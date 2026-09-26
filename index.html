@@ -5,8 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>4 Kare Medya Ajansı</title>
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Kritik ilk kare koruması: JS/CSS hazırlanırken sayfanın alt içeriği asla görünmez. */
+        body.intro-pending { overflow: hidden !important; background: #050505 !important; }
+        body.intro-pending #intro { position: fixed !important; inset: 0 !important; z-index: 9999 !important; background: #050505 !important; }
+        body.intro-pending #calismalar { visibility: hidden !important; }
+    </style>
 </head>
-<body>
+<body class="intro-pending">
     <main id="intro">
         <header id="site-header">
             <div id="brand-lockup">
