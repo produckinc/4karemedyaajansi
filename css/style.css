@@ -2252,3 +2252,219 @@ body.works-page-body .inner-page.works-page {
     font-size: 10.4vw !important;
   }
 }
+
+/* =========================================================
+   ÇALIŞMALARIMIZ / PORTFÖY — SABİT SATIR ŞABLONLARI
+   Medya standardı:
+   yatay = 1920x1080 (16:9), dikey = 1080x1920 (9:16)
+   Masaüstü şablonları: 2Y, 3Y, 1Y+2D, 2D, 3D, 4D.
+   Mobilde bütün satırlar tek kolona dönüşür.
+   ========================================================= */
+.works-page-body .works-showcase { display:block!important; width:100%; margin-top:70px!important; }
+.works-page-body .work-project { width:100%; padding:0 0 clamp(82px,8vw,130px); margin:0 0 clamp(82px,8vw,130px); border-bottom:1px solid rgba(5,5,5,.28); }
+.works-page-body .work-project:last-child { margin-bottom:0; }
+.works-page-body .work-project-head { display:grid; grid-template-columns:70px minmax(0,1fr) minmax(240px,32%); align-items:end; gap:clamp(22px,3vw,48px); padding-bottom:clamp(26px,3vw,42px); }
+.works-page-body .work-project-index { align-self:start; padding-top:5px; font-size:11px; font-weight:800; letter-spacing:.18em; }
+.works-page-body .work-project-title p { margin:0 0 13px; font-size:9px; font-weight:800; letter-spacing:.18em; }
+.works-page-body .work-project-title h2 { margin:0; max-width:900px; font-size:clamp(54px,6.5vw,104px); line-height:.82; letter-spacing:-.065em; font-weight:900; }
+.works-page-body .work-project-desc { max-width:420px; margin:0; font-size:14px; line-height:1.55; }
+
+.works-page-body .work-media-grid { display:flex; flex-direction:column; gap:clamp(10px,1.15vw,18px); }
+.works-page-body .work-media-row { display:grid; width:100%; gap:clamp(10px,1.15vw,18px); align-items:start; }
+.works-page-body .work-media { min-width:0; margin:0; overflow:hidden; background:#e5dbcd; }
+.works-page-body .work-media[data-format="horizontal"] { aspect-ratio:16 / 9; }
+.works-page-body .work-media[data-format="vertical"] { aspect-ratio:9 / 16; }
+.works-page-body .work-media img,
+.works-page-body .work-media video { display:block; width:100%; height:100%; object-fit:cover; }
+.works-page-body .work-media img { transition:transform .75s cubic-bezier(.2,.7,.2,1); }
+@media (hover:hover) { .works-page-body .work-media:hover img { transform:scale(1.012); } }
+
+/* 2 yatay */
+.works-page-body .work-media-row-2h { grid-template-columns:repeat(2,minmax(0,1fr)); }
+/* 3 yatay */
+.works-page-body .work-media-row-3h { grid-template-columns:repeat(3,minmax(0,1fr)); }
+/* 1 yatay + 2 dikey: hepsinin yüksekliği matematiksel olarak eşittir.
+   16:9 yatayın genişlik katsayısı 256, 9:16 dikeyin katsayısı 81. */
+.works-page-body .work-media-row-1h2v { grid-template-columns:minmax(0,256fr) minmax(0,81fr) minmax(0,81fr); }
+/* Dikey satırlar */
+.works-page-body .work-media-row-2v { grid-template-columns:repeat(2,minmax(0,1fr)); max-width:58%; margin-inline:auto; }
+.works-page-body .work-media-row-3v { grid-template-columns:repeat(3,minmax(0,1fr)); max-width:76%; margin-inline:auto; }
+.works-page-body .work-media-row-4v { grid-template-columns:repeat(4,minmax(0,1fr)); }
+
+.works-page-body .work-project-foot { display:flex; align-items:center; justify-content:space-between; gap:24px; padding-top:18px; font-size:8px; font-weight:800; letter-spacing:.16em; }
+.works-page-body .work-project-foot > span { opacity:.6; }
+.works-page-body .work-project-foot a { color:inherit; text-decoration:none; padding-bottom:5px; border-bottom:1px solid currentColor; }
+
+@media (max-width:768px) {
+    .works-page-body .works-showcase { margin-top:50px!important; }
+    .works-page-body .work-project { padding-bottom:68px; margin-bottom:68px; }
+    .works-page-body .work-project-head { display:block; padding-bottom:25px; }
+    .works-page-body .work-project-index { margin-bottom:26px; }
+    .works-page-body .work-project-title p { margin-bottom:12px; font-size:8px; line-height:1.45; }
+    .works-page-body .work-project-title h2 { font-size:clamp(48px,14.5vw,68px); line-height:.84; }
+    .works-page-body .work-project-desc { margin-top:22px; max-width:100%; font-size:13px; }
+    .works-page-body .work-media-grid { gap:12px; }
+    .works-page-body .work-media-row,
+    .works-page-body .work-media-row-2h,
+    .works-page-body .work-media-row-3h,
+    .works-page-body .work-media-row-1h2v,
+    .works-page-body .work-media-row-2v,
+    .works-page-body .work-media-row-3v,
+    .works-page-body .work-media-row-4v {
+        display:flex;
+        flex-direction:column;
+        width:100%;
+        max-width:none;
+        margin-inline:0;
+        gap:12px;
+    }
+    .works-page-body .work-media { width:100%; }
+    .works-page-body .work-project-foot { padding-top:16px; }
+}
+
+
+/* =========================================================
+   ÇALIŞMALAR / PROJE GİRİŞ METNİ — EDİTORYAL SÜTUN STANDARDI
+   Masaüstünde açıklama başlık bloğunun yüksekliğinde kalır ve
+   metin 2 sütuna akar. Mobilde tek sütun normal metne döner.
+   ========================================================= */
+.works-showcase .work-project-head {
+    align-items: stretch;
+}
+.works-showcase .work-project-desc {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    overflow: hidden;
+}
+.works-showcase .work-project-desc-label {
+    display: block;
+    margin-bottom: 14px;
+    padding-top: 2px;
+    font-size: 9px;
+    line-height: 1;
+    font-weight: 700;
+    letter-spacing: .18em;
+}
+.works-showcase .work-project-desc p {
+    margin: 0;
+    font-size: clamp(11px, .82vw, 14px);
+    line-height: 1.5;
+    column-count: 3;
+    column-gap: clamp(18px, 1.8vw, 30px);
+    column-fill: balance;
+}
+@media (max-width: 900px) {
+    .works-showcase .work-project-desc {
+        overflow: visible;
+    }
+    .works-showcase .work-project-desc p {
+        column-count: 1;
+        font-size: 14px;
+        line-height: 1.55;
+    }
+}
+
+
+/* =========================================================
+   ÇALIŞMALAR / PROJE ÜST BANDI — V9 DOĞRU HİZA
+   - Başlık soldaki ana görselin SOL başlangıcıyla aynı hizada.
+   - Proje açıklaması başlığın sağında ve aradaki boşluk dar.
+   - Açıklama 3 sütun.
+   ========================================================= */
+@media (min-width: 901px) {
+    .works-showcase .work-project-head {
+        display: grid !important;
+        grid-template-columns: minmax(0, 62%) minmax(0, 38%) !important;
+        column-gap: clamp(18px, 1.5vw, 28px) !important;
+        align-items: start !important;
+    }
+
+    .works-showcase .work-project-title {
+        grid-column: 1 !important;
+        justify-self: start !important;
+        margin-left: 0 !important;
+        padding-left: 0 !important;
+        width: 100% !important;
+        max-width: none !important;
+        text-align: left !important;
+    }
+
+    .works-showcase .work-project-desc {
+        grid-column: 2 !important;
+        justify-self: stretch !important;
+        margin-left: 0 !important;
+        padding-left: 0 !important;
+        width: 100% !important;
+        max-width: none !important;
+    }
+
+    .works-showcase .work-project-desc p {
+        column-count: 3 !important;
+        column-gap: clamp(14px, 1.25vw, 22px) !important;
+    }
+}
+
+
+/* =========================================================
+   ÇALIŞMALAR / PROJE AÇIKLAMASI — V10 SABİT YÜKSEKLİK
+   Masaüstünde 3 sütunluk metin alanı büyük iki satırlı proje
+   başlığının yüksekliğini referans alır. Metin bu alan boyunca
+   yukarıdan aşağıya dengeli akar; daha uzun içerik taşamaz.
+   ========================================================= */
+@media (min-width: 901px) {
+    .works-showcase .work-project-head {
+        align-items: stretch !important;
+    }
+
+    .works-showcase .work-project-desc {
+        height: clamp(190px, 15.5vw, 260px) !important;
+        max-height: clamp(190px, 15.5vw, 260px) !important;
+        overflow: hidden !important;
+        align-self: start !important;
+    }
+
+    .works-showcase .work-project-desc-label {
+        flex: 0 0 auto;
+        margin-bottom: 12px !important;
+    }
+
+    .works-showcase .work-project-desc p {
+        height: calc(100% - 24px) !important;
+        column-count: 3 !important;
+        column-fill: auto !important;
+        column-gap: clamp(18px, 1.5vw, 28px) !important;
+        font-size: clamp(11px, .82vw, 14px) !important;
+        line-height: 1.48 !important;
+        overflow: hidden !important;
+    }
+}
+
+
+/* V11 — proje açıklamasının altı büyük başlığın alt hizasını geçmez */
+@media (min-width: 901px) {
+    .works-showcase .work-project-desc {
+        height: clamp(160px, 13vw, 218px) !important;
+        max-height: clamp(160px, 13vw, 218px) !important;
+    }
+    .works-showcase .work-project-desc p {
+        height: calc(100% - 23px) !important;
+        column-count: 3 !important;
+        column-fill: auto !important;
+        font-size: clamp(10.5px, .78vw, 13px) !important;
+        line-height: 1.44 !important;
+        column-gap: clamp(16px, 1.35vw, 24px) !important;
+    }
+}
+
+
+/* V12 — açıklama metni masaüstünde fiziksel olarak 3 sütunu doldurur */
+@media (min-width: 901px) {
+    .works-showcase .work-project-desc p {
+        column-count: 3 !important;
+        column-fill: auto !important;
+        column-gap: clamp(16px, 1.35vw, 24px) !important;
+    }
+}
+\n\n/* =========================================================\n   ADMIN'E HAZIR MEDYA SLOTLARI — V2\n   İçerik metinleri korunur. Boş slotlar ileride admin panelinden\n   görsel veya video ile doldurulur.\n   ========================================================= */\n.admin-media-zone{\n    width:100%;\n    margin:clamp(52px,7vw,100px) 0;\n    display:grid;\n    grid-template-columns:minmax(0,256fr) minmax(0,81fr) minmax(0,81fr);\n    gap:clamp(8px,1vw,16px);\n    align-items:start;\n}\n.admin-media-slot{\n    position:relative;\n    display:flex;\n    flex-direction:column;\n    align-items:center;\n    justify-content:center;\n    border:1px solid rgba(5,5,5,.28);\n    background:rgba(5,5,5,.025);\n    overflow:hidden;\n    text-align:center;\n    color:rgba(5,5,5,.48);\n}\n.admin-media-horizontal{aspect-ratio:16/9}\n.admin-media-vertical{aspect-ratio:9/16}\n.admin-media-slot span{font-size:9px;font-weight:800;letter-spacing:.16em}\n.admin-media-slot small{margin-top:8px;font-size:8px;letter-spacing:.12em}\n.admin-media-slot img,.admin-media-slot video{width:100%;height:100%;object-fit:cover;display:block}\n.admin-media-zone-contact{grid-template-columns:minmax(0,256fr) minmax(0,81fr)}\n@media(max-width:768px){\n    .admin-media-zone,.admin-media-zone-contact{grid-template-columns:1fr;margin:42px 0;gap:12px}\n    .admin-media-slot{width:100%}\n}\n
